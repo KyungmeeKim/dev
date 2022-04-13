@@ -59,7 +59,7 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_latest
         
       - name: re-name
-        run: mv ./build/libs/*.war backup${GITHUB_SHA::7}.war
+        run: mv ./build/libs/*.war ./build/libs/backup${GITHUB_SHA::7}.war
         
       - name: ls
         run: ls -al ./build/libs
