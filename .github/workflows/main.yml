@@ -81,5 +81,5 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@v0
         with:
           path: ./build/libs/
-          destination: backup-war/${{GITHUB_SHA::7}}
+          destination: backup-war/
           parent: false
