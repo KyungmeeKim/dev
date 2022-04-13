@@ -81,13 +81,13 @@ jobs:
         run: kubectl rollout restart deployment/was
         
       - name: cs auth
-        uses: 'google-github-actions/auth@v0'
+        uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_CS_KEY }}
 
-      - id: 'upload-folder'
-        uses: 'google-github-actions/upload-cloud-storage@v0'
+      - name: upload-folder
+        uses: google-github-actions/upload-cloud-storage@v0
         with:
-          path: './build/libs/*.war'
-          destination: 'bucket-name'
+          path: ./build/libs/*.war
+          destination: backup-war
           parent: false
