@@ -62,7 +62,11 @@ jobs:
           kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ${{ secrets.AWS_DEFAULT_REGION }} 
+          aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
+  
+        # Connect to EKS cluster
+      - name: Connect to EKS cluster 
+        run: aws eks --region  ${{ secrets.EKS_REGION }} update-kubeconfig --name  ${{ secrets.EKS_NAME }}
 
       # deploy was    
       - name: was-deploy restart
