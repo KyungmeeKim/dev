@@ -56,16 +56,15 @@ jobs:
       - name: docer push
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_latest
         
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1 
+      - name: deploy to cluster
+        uses: qazz92/kubectl@1.0.3
+        env:
+          kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region:  ${{ secrets.EKS_REGION }}
-          args: set image --record deployment/was container=java-was
+          args: set image --record deployment/was container=${{ github.repository}}:${{ github.sha }}
           
-      # deploy was    
-      - name: was-deploy restart
-        run: kubectl rollout restart deployment/was
         
     
