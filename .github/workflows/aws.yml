@@ -64,7 +64,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          args: set image --record deployment/was container=${{ github.repository}}:${{ github.sha }}
+          args: set image --record deployment/was container=java-was
           
         
     
