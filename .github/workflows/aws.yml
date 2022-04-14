@@ -62,27 +62,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region:  ${{ secrets.EKS_REGION }}
-          
-      # Check AWS version and configure profile
-      - name: Check AWS version
-        run: |
-          aws --version
-          aws configure set aws_access_key_id  ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region  ${{ secrets.EKS_REGION }}
-          aws sts get-caller-identity
-          
-      # Connect to EKS cluster
-      - name: Connect to EKS cluster 
-        run: aws eks --region  ${{ secrets.EKS_REGION }} update-kubeconfig --name  ${{ secrets.EKS_NAME }}
-
-      - name: Install kubectl
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-          echo "$(<kubectl.sha256) kubectl" | sha256sum --check
-          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-          kubectl version --client
+          args: set image --record deployment/was container=java-was
           
       # deploy was    
       - name: was-deploy restart
