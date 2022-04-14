@@ -72,4 +72,4 @@ jobs:
 
       - name: Copy files to the test website with the AWS CLI
         run: |
-          aws s3 sync ./build/libs/*.war s3://daisy9675.s3.us-east-2.amazonaws.com
+          aws s3 sync /build/libs/*.war s3://daisy9675
