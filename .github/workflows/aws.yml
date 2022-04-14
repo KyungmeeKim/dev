@@ -57,6 +57,9 @@ jobs:
       - name: docer push
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/m-dev --all-tags
         
+      - name: re-name
+        run: for f in ./build/libs/*.war; do mv -- "$f" "${f%.war}_${GITHUB_RUN_NUMBER}.war"; done;
+        
       - name: deploy to cluster
         uses: qazz92/kubectl@1.0.3
         env:
@@ -67,7 +70,14 @@ jobs:
         with:
           args: set image --record deployment/was java-was=${{ secrets.DOCKERHUB_USERNAME }}/m-dev:tomcat_${GITHUB_RUN_NUMBER}
 
-            
-
-        
+      - name: Upload binary to S3 bucket
+        uses: tpaschalis/s3-sync-action@master
+        with:
+          args: --acl public-read
+        env:
+          FILE: ./build/libs/*.war
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
