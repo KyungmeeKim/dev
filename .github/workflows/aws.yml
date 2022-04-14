@@ -84,9 +84,7 @@ jobs:
           sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
           kubectl version --client
           
-      - name: kubectl get node
-        run: kubectl get node
-     
+      # deploy was    
       - name: was-deploy restart
         run: kubectl rollout restart deployment/was
         
