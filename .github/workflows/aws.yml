@@ -63,7 +63,8 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
-
+        with:
+          args: set image --record deployment/was java-was=kkmee0209/m-dev:tomcat_latest
 
       # deploy was    
       - name: was-deploy restart
