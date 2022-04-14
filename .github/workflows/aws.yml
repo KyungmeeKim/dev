@@ -64,7 +64,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          args: kubectl rollout restart deployment/was
+          args: " rollout restart deployment/was "
 
             
 
