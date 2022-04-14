@@ -65,11 +65,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region:  ${{ secrets.EKS_REGION }}
+          aws-region:  ${{ secrets.AWS_DEFAULT_REGION }}
           
       # Connect to EKS cluster
       - name: Connect to EKS cluster 
-        run: aws eks --region  ${{ secrets.EKS_REGION }} update-kubeconfig --name  ${{ secrets.EKS_NAME }}
+        run: aws eks --region  ${{ secrets.AWS_DEFAULT_REGION }} update-kubeconfig --name  ${{ secrets.EKS_NAME }}
 
       # rollout   
       - name: was-deploy restart
